@@ -1,4 +1,5 @@
 import re
+import math
 
 TAVERN = 0
 AIR = -1
@@ -46,6 +47,9 @@ class Game:
                 elif (obj == TAVERN):
                     self.taverns_locs.add((row, col))
 
+        for mine_pos, hero_id in self.mines_locs.items():
+            if hero_id == self.hero
+                    
 
 
 class Board:
@@ -92,6 +96,20 @@ class Board:
 
         return (n_row, n_col)
 
+    def get_distance(self, pos1, pos2):
+        x1, y1 = pos1
+        x2, y2 = pos2
+        return math.sqrt( (x2 - x1)**2 + (y2 - y1)**2 )
+
+    def get_nearest_mine_pos(self, hero_pos, game):
+        nearest_mine_pos = None
+        curr_dist = float("inf")
+        for mine_pos in game.mines_locs:
+            dist = self.get_distance(hero_pos, mine_pos)
+            if dist < curr_dist:
+                curr_dist = dist
+                nearest_mine_pos = mine_pos
+        return nearest_mine_pos
 
 
 class Hero:
@@ -100,4 +118,4 @@ class Hero:
         self.pos = hero['pos']
         self.life = hero['life']
         self.gold = hero['gold']
-
+        self.owned_mines = []
