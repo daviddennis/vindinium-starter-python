@@ -5,7 +5,7 @@ import os
 import sys
 import requests
 import re
-from bot import RandomBot, SlowBot
+from bot import StrategyBot, SlowBot
 
 TIMEOUT=15
 
@@ -61,7 +61,7 @@ def start(server_url, key, mode, turns, bot):
         print(u'Connected and waiting for other players to join…')
     # Get the initial state
     state = get_new_game_state(session, server_url, key, mode, turns)
-    print("Playing at: " + state['viewUrl'])
+    print("Playing at: \n" + state['viewUrl'])
 
     while not is_finished(state):
         # Some nice output ;)
@@ -100,5 +100,5 @@ if __name__ == "__main__":
             server_url = "http://vindinium.org"
 
         for i in range(number_of_games):
-            start(server_url, key, mode, number_of_turns, RandomBot())
+            start(server_url, key, mode, number_of_turns, StrategyBot())
             print("\nGame finished: %d/%d" % (i+1, number_of_games))

@@ -18,6 +18,9 @@ class HeroTile:
     def __init__(self, id):
         self.id = id
 
+    def __unicode__(self):
+        print 'H'
+
 class MineTile:
     def __init__(self, heroId = None):
         self.heroId = heroId
@@ -27,6 +30,9 @@ class Game:
         self.state = state
         self.board = Board(state['game']['board'])
         self.heroes = [Hero(state['game']['heroes'][i]) for i in range(len(state['game']['heroes']))]
+        for hero in self.heroes:
+            if hero.name == 'Cybrex':
+                self.hero = hero
         self.mines_locs = {}
         self.heroes_locs = {}
         self.taverns_locs = set([])
@@ -71,7 +77,7 @@ class Board:
         'true if can not walk through'
         x, y = loc
         pos = self.tiles[x][y]
-        return (pos != WALL) and (pos != TAVERN) and not isinstance(pos, MineTile)
+        return ((pos != WALL) and (pos != TAVERN) and not isinstance(pos, MineTile))
 
     def to(self, loc, direction):
         'calculate a new location given the direction'
